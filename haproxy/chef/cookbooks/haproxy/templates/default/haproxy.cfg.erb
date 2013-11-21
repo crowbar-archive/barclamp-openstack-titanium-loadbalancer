@@ -123,7 +123,7 @@ listen glance-reg
   server <%= @admincont3 %> <%= @cont3_admin_ip %>:9191   check   
 
 listen mysqld
-  bind <%= @admin_ip %>:3307
+  bind <%= @admin_ip %>:3306
   balance leastconn
   mode  tcp
   option  mysql-check user cluster_watcher
@@ -132,10 +132,9 @@ listen mysqld
   option  srvtcpka
   timeout client  28801s
   timeout server  28801s
-  server <%= @admincont1 %> <%= @cont1_admin_ip %>:3307   check port 9200 inter 12000 rise 3 fall 3  
-  server <%= @admincont2 %> <%= @cont2_admin_ip %>:3307   check port 9200 inter 12000 rise 3 fall 3
-  server <%= @admincont3 %> <%= @cont3_admin_ip %>:3307   check port 9200 inter 12000 rise 3 fall 3
-
+  server <%= @admincont1 %> <%= @cont1_admin_ip %>:3306   check inter 12000 rise 3 fall 3  
+  server <%= @admincont2 %> <%= @cont2_admin_ip %>:3306   check inter 12000 rise 3 fall 3
+  server <%= @admincont3 %> <%= @cont3_admin_ip %>:3306   check inter 12000 rise 3 fall 3
 
 listen swift
   bind <%= @admin_ip %>:8080
