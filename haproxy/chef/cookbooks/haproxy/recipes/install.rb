@@ -18,8 +18,10 @@
 # limitations under the License.
 #
 
-execute "createhaproxydir" do
-  command "mkdir -p /var/lib/haproxy"
+directory "/var/lib/haproxy" do
+  mode 0755
+  recursive true
+  action :create
 end
 
 package "haproxy" do
@@ -30,7 +32,6 @@ service "haproxy" do
   supports :restart => true
   action [:enable, :start]
 end
-
 
 package "keepalived" do
   action :install
@@ -48,7 +49,6 @@ else
   env_filter = "#{env_filter} AND roles:haproxy"
   is_master = false
 end
-
 
 admin_net = Chef::Recipe::Barclamp::Inventory.get_network_by_type(node, "admin")
 public_net = Chef::Recipe::Barclamp::Inventory.get_network_by_type(node, "public")
