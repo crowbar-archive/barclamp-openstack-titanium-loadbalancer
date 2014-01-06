@@ -1,4 +1,4 @@
 
-<% unless node[:rabbitmq].nil? -%>
-command[check_haproxy]=/usr/lib/nagios/plugins/check_haproxy.rb -u 'http://<%= node['ipaddress'] %>:1936/;csv' -U haproxy -P pass
+<% unless node[:haproxy].nil? -%>
+command[check_haproxy]=/usr/lib/nagios/plugins/check_haproxy.rb -u 'http://<%= node['ipaddress'] %>:80/;csv' -U haproxy -P pass
 <% end -%>
