@@ -25,6 +25,7 @@ defaults
 listen admin
  bind <%= @admin_ip %>:80
  stats enable
+ stats auth haproxy:pass
 
 listen horizon
   bind <%= @public_ip %>:80
@@ -150,11 +151,11 @@ listen swift
 <% end %>
 <% end %> 
 
-listen stats :1936
-  mode http
-  stats enable
-  stats hide-version
-  stats scope .
-  stats realm Haproxy\ Statistics
-  stats uri /
-  stats auth haproxy:pass
+#listen stats :1936
+#  mode http
+#  stats enable
+#  stats hide-version
+#  stats scope .
+#  stats realm Haproxy\ Statistics
+#  stats uri /
+#  stats auth haproxy:pass
