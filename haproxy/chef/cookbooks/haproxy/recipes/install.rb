@@ -132,6 +132,10 @@ template "/etc/haproxy/haproxy.cfg" do
    notifies :restart, resources(:service => "haproxy")
 end
 
+execute "enable init script to start haproxy" do
+  command "sed -i 's/ENABLED=0/ENABLED=1/' /etc/default/haproxy"
+end
+
 unless `ps -N |grep haproxy` != ""
    execute "starthaproxy" do
      command "haproxy -f /etc/haproxy/haproxy.cfg"
