@@ -23,9 +23,14 @@ defaults
   timeout  check 10s
 
 listen admin
- bind <%= @admin_ip %>:80
- stats enable
- stats auth haproxy:pass
+  bind <%= @admin_ip %>:80
+  stats enable
+  stats auth haproxy:pass
+  mode http
+  stats hide-version
+  stats scope .
+  stats realm Haproxy\ Statistics
+  stats uri /
 
 listen horizon
   bind <%= @public_ip %>:80
