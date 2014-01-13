@@ -137,13 +137,14 @@ listen mysqld
   mode  tcp
   option  mysql-check user cluster_watcher
   option  tcplog
+  option  httpchk
   option  clitcpka
   option  srvtcpka
   timeout client  28801s
   timeout server  28801s
-  server <%= @admincont1 %> <%= @cont1_admin_ip %>:3307   check port 9200 inter 12000 rise 3 fall 3  
-  server <%= @admincont2 %> <%= @cont2_admin_ip %>:3307   check port 9200 inter 12000 rise 3 fall 3
-  server <%= @admincont3 %> <%= @cont3_admin_ip %>:3307   check port 9200 inter 12000 rise 3 fall 3
+  server <%= @admincont1 %> <%= @cont1_admin_ip %>:3306   check port 9200 inter 12000 rise 3 fall 3  
+  server <%= @admincont2 %> <%= @cont2_admin_ip %>:3306   check port 9200 inter 12000 rise 3 fall 3
+  server <%= @admincont3 %> <%= @cont3_admin_ip %>:3306   check port 9200 inter 12000 rise 3 fall 3
 
 <% if @swift_detected %>  
 listen swift
