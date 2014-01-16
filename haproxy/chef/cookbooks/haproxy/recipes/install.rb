@@ -1,4 +1,3 @@
-#
 # Cookbook Name:: git
 # Recipe:: install
 #
@@ -18,8 +17,10 @@
 # limitations under the License.
 #
 
-execute "createhaproxydir" do
-  command "mkdir -p /var/lib/haproxy"
+directory "/var/lib/haproxy" do
+  mode 0755
+  recursive true
+  action :create
 end
 
 package "haproxy" do
@@ -30,7 +31,6 @@ service "haproxy" do
   supports :restart => true
   action [:enable, :start]
 end
-
 
 package "keepalived" do
   action :install
