@@ -24,6 +24,7 @@ directory "/var/lib/haproxy" do
 end
 
 package "haproxy" do
+  version "1.4.18-0ubuntu1.2"
   action :install
 end
 
@@ -126,12 +127,15 @@ if db_swift_proxies == ""
    notifies :restart, resources(:service => "haproxy")
   end
 
-  # restart haproxy (reload new config)
-  unless `ps -N |grep haproxy` != ""
-    execute "starthaproxy" do
-      command "haproxy -f /etc/haproxy/haproxy.cfg"
-    end
-  else
+execute "enable init script to start haproxy" do
+  command "sed -i 's/ENABLED=0/ENABLED=1/' /etc/default/haproxy"
+end
+
+unless `ps -N |grep haproxy` != ""
+   execute "starthaproxy" do
+     command "haproxy -f /etc/haproxy/haproxy.cfg"
+   end
+else
     execute "reloadhaproxy" do
       command "haproxy -f /etc/haproxy/haproxy.cfg -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid)"
     end
