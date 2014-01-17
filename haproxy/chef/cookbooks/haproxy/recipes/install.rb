@@ -103,11 +103,23 @@ template "/etc/keepalived/keepalived.conf" do
 end
 
 # Do we need to add swift to the config?
-swift_nodes_db = data_bag_item("crowbar", "swift-nodes") 
-db_haproxy_proposal = swift_nodes_db["haproxy-proposal"]
-db_swift_proxies = swift_nodes_db["proxy-nodes"]
-Chef::Log.info("HAProxy:update_for_swift - db_haproxy_proposal - #{db_haproxy_proposal}") 
-Chef::Log.info("HAProxy:update_for_swift - db_swift_proxies - #{db_swift_proxies}") 
+begin
+   # Retrieves swift-nodes data bag
+   swift_nodes_db = data_bag_item("crowbar", "swift-nodes")
+   # If swift data bag is not null 
+   unless swift_nodes.nil?
+     db_haproxy_proposal = swift_nodes_db["haproxy-proposal"]
+     db_swift_proxies = swift_nodes_db["proxy-nodes"]
+     Chef::Log.info("HAProxy:update_for_swift - db_haproxy_proposal - #{db_haproxy_proposal}")
+     Chef::Log.info("HAProxy:update_for_swift - db_swift_proxies - #{db_swift_proxies}")
+   end
+rescue
+  # Swift Data bag search can throw an exception if this data bag doesn't exit
+  # It does mean than swift is not installed and/or deployed
+  Chef::Log.info("Exception caught while retrieving swift data bag. Swift is not installed -> Skip this step")
+  db_swift_proxies = ""
+end
+
 if db_swift_proxies == ""
   template "/etc/haproxy/haproxy.cfg" do
     source "haproxy.cfg.erb"
