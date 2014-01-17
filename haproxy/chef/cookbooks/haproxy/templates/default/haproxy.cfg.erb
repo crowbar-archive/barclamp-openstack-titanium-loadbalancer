@@ -129,15 +129,15 @@ listen quantum
   server  <%= @admincont2 %> <%= @cont2_admin_ip %>:9696   check  
   server  <%= @admincont3 %> <%= @cont3_admin_ip %>:9696   check   
 
-listen rabbit_cluster
-  bind <%= @admin_ip %>:5672
-  balance  roundrobin
-  mode  tcp
-  option  tcpka
-  option  tcplog
-  server <%= @admincont1 %> <%= @cont1_admin_ip %>:5672  check inter 2000 rise 2 fall 5
-  server <%= @admincont2 %> <%= @cont2_admin_ip %>:5672  check inter 2000 rise 2 fall 5
-  server <%= @admincont3 %> <%= @cont3_admin_ip %>:5672  check inter 2000 rise 2 fall 5
+#listen rabbit_cluster
+#  bind <%= @admin_ip %>:5672
+#  balance  roundrobin
+#  mode  tcp
+#  option  tcpka
+#  option  tcplog
+#  server <%= @admincont1 %> <%= @cont1_admin_ip %>:5672  check
+#  server <%= @admincont2 %> <%= @cont2_admin_ip %>:5672  check 
+#  server <%= @admincont3 %> <%= @cont3_admin_ip %>:5672  check 
 
 listen mysqld
   bind <%= @admin_ip %>:3307
