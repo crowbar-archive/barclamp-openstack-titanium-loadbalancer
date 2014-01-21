@@ -140,7 +140,7 @@ listen quantum
 #  server <%= @admincont3 %> <%= @cont3_admin_ip %>:5672  check 
 
 listen mysqld
-  bind <%= @admin_ip %>:3306
+  bind <%= @admin_ip %>:3307
   balance leastconn
   mode  tcp
   option  mysql-check user cluster_watcher
