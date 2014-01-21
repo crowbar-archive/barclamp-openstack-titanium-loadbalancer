@@ -22,7 +22,7 @@ defaults
   timeout  check 10s
 
 listen admin
-  bind <%= @admin_ip %>:80
+  bind <%= @admin_ip %>:83
   stats enable
   stats auth haproxy:pass
   mode http
