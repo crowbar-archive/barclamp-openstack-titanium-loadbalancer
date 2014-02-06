@@ -52,10 +52,16 @@ begin
     cont3_admin_ip = admin_net_db["allocated_by_name"]["#{admincont3}"]["address"]
 
     # get public & admin vips
-    domain = swift_proxy_servers[1].split('.')
-    haproxy_service_name = "haproxy-config-" + db_haproxy_proposal + "." + domain[1] + "." + domain[2]
-    public_vip = public_net_db["allocated_by_name"]["#{haproxy_service_name}"]["address"]
-    admin_vip = admin_net_db["allocated_by_name"]["#{haproxy_service_name}"]["address"]
+    #domain = swift_proxy_servers[1].split('.')
+    #haproxy_service_name = "haproxy-config-" + db_haproxy_proposal + "." + domain[1] + "." + domain[2]
+    #public_vip = public_net_db["allocated_by_name"]["#{haproxy_service_name}"]["address"]
+    #admin_vip = admin_net_db["allocated_by_name"]["#{haproxy_service_name}"]["address"]
+    service_name = node[:haproxy][:config][:environment]
+    proposal_name = service_name.split('-')
+    bcproposal = "bc-haproxy-"+proposal_name[2]
+    domain = node[:domain]
+    public_vip = public_net_db["allocated_by_name"]["#{service_name}.#{domain}"]["address"]
+    admin_vip = admin_net_db["allocated_by_name"]["#{service_name}.#{domain}"]["address"]
     Chef::Log.info("HAProxy:update_for_swift - admin_vip - #{admin_vip}") 
     Chef::Log.info("HAProxy:update_for_swift - public_vip - #{public_vip}") 
     

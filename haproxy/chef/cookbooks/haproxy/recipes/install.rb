@@ -107,7 +107,7 @@ begin
    # Retrieves swift-nodes data bag
    swift_nodes_db = data_bag_item("crowbar", "swift-nodes")
    # If swift data bag is not null 
-   unless swift_nodes.nil?
+   unless swift_nodes_db.nil?
      db_haproxy_proposal = swift_nodes_db["haproxy-proposal"]
      db_swift_proxies = swift_nodes_db["proxy-nodes"]
      Chef::Log.info("HAProxy:update_for_swift - db_haproxy_proposal - #{db_haproxy_proposal}")
