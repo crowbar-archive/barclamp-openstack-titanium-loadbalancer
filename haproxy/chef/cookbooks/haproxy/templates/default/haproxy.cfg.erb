@@ -25,6 +25,7 @@ listen admin
   bind <%= @admin_ip %>:83
   stats enable
   stats auth haproxy:pass
+  stats refresh 60s
   mode http
   stats hide-version
   stats realm Haproxy\ Statistics
